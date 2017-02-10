@@ -41,6 +41,7 @@ use MIME::Lite::TT;
 use Digest::MD5;
 use Time::HiRes qw(stat time);
 use Fcntl qw(:DEFAULT);
+use Net::Ping;
 
 our ( %local_mac );
 
@@ -86,6 +87,7 @@ BEGIN {
         clean_locale 
         pf_chown
         user_chown
+        ping
     );
 }
 
@@ -1291,6 +1293,12 @@ sub clean_locale {
         $locale = $1;
     }
     return $locale;
+}
+
+sub ping {
+    my ($host) = @_;
+    my $p = Net::Ping->new();
+    return $p->ping($host);
 }
 
 =back
